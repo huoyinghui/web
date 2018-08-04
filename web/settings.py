@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'courses',
     'organization',
     'operation',
+    'xadmin',
+    'crispy_forms',
 ]
 AUTH_USER_MODEL = "users.UserProfile"
 
@@ -124,6 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Shanghai'  # 时区
@@ -132,7 +135,9 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+# 数据时间带时区
+# USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
