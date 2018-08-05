@@ -39,12 +39,29 @@ class BannerAdmin(object):
 
 
 class BaseSetting(object):
-    enable_thems = True
+    """
+    主题功能开启
+    """
+    enable_themes = True
+    # 需要开通代理，访问谷歌
     use_bootswatch = True
 
 
+class GlobalSettings(object):
+    """
+    title:
+    footer:
+    """
+    site_title = "慕课后台管理站"
+    site_footer = "TEShyh"
+    # 收起菜单
+    menu_style = "accordion"
+
 # 将Xadmin全局管理器与我们的view绑定注册。
 xadmin.site.register(views.BaseAdminView, BaseSetting)
+# 将头部与脚部信息进行注册:
+xadmin.site.register(views.CommAdminView, GlobalSettings)
+
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
 xadmin.site.register(Banner, BannerAdmin)
 
