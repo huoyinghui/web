@@ -27,6 +27,11 @@ SECRET_KEY = '+cqs7ahq^b7z4!@bv4ocr2iu-c#f0xf025!kv@^vim0(so%@(g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# Application definition 注册我们的app
+# 设置邮箱和用户名均可登录
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
 
 ALLOWED_HOSTS = [
     'testserver',
