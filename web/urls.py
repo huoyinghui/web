@@ -35,7 +35,7 @@ urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
 
     # 验证码url
-    # path("captcha/", include('captcha.urls')),
+    path("captcha/", include('captcha.urls')),
 
     # 激活用户url
     # re_path('active/(?P<active_code>.*)/', ActiveUserView.as_view(), name= "user_active"),
