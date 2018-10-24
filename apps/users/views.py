@@ -1,17 +1,25 @@
+import logging
+
+from django.core.cache import cache
 from django.shortcuts import render
 # Django自带的用户验证,login
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.hashers import make_password
+from django.views.decorators.cache import cache_page
 from django.views.generic.base import View
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.db.models import Q
+from django.utils.decorators import method_decorator
 
 from .forms import LoginForm, RegisterForm
 from .models import UserProfile
 from message.models import UserMessage
 # Create your views here.
+
+logger = logging.getLogger('app')
+
 
 
 class LogoutView(View):
@@ -20,17 +28,29 @@ class LogoutView(View):
     """
     def get(self, request):
         # django自带的logout
+        logger.info('this is info in logout')
         logout(request)
         # 重定向到首页,
         return HttpResponseRedirect(reverse("index"))
 
 
+@method_decorator(cache_page(30 * 1), name='dispatch')
 class LoginView(View):
     """
 
     """
     def get(self, request):
+        data = cache.get('data')
+        if data:
+            logger.debug('cache hit :{}'.format(data))
+            return JsonResponse({'hello': data})
+        else:
+            logger.debug('cache unhit :{}'.format(data))
+            data = ["{}".format(i) for i in range(3)]
+            cache.set('data', data, timeout=10)
+            return JsonResponse({'hello': data})
         redirect_url = request.GET.get('next', '')
+
         return render(request, "login.html", {
             "redirect_url": redirect_url
         })

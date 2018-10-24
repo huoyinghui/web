@@ -1,5 +1,8 @@
 # Byte-compiled / optimized / DLL files
 banner/
+log/
+.vscode/
+test/
 web/*_setting.py
 __pycache__/
 *.py[cod]
