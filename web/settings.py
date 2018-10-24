@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'xadmin',
     'crispy_forms',
+    'djcelery',
     'message',
     'users',
     'courses',
@@ -64,6 +65,7 @@ AUTH_USER_MODEL = "users.UserProfile"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -133,8 +135,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-# LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'zh-hans'
+LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'zh'
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Shanghai'  # 时区
@@ -146,6 +148,11 @@ USE_L10N = True
 # 数据时间带时区
 # USE_TZ = True
 USE_TZ = False
+
+# local
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 
 # Static files (CSS, JavaScript, Images)

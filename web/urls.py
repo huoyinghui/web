@@ -38,6 +38,7 @@ urlpatterns = [
     # 验证码url
     path("captcha/", include('captcha.urls')),
     path("blog/", include('blog.urls')),
+    path("lang/", include('lang.urls')),
 
     # 激活用户url
     # re_path('active/(?P<active_code>.*)/', ActiveUserView.as_view(), name= "user_active"),

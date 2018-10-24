@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.db.models import Q
 from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext as _
 
 from .forms import LoginForm, RegisterForm
 from .models import UserProfile
@@ -19,7 +20,6 @@ from message.models import UserMessage
 # Create your views here.
 
 logger = logging.getLogger('app')
-
 
 
 class LogoutView(View):
@@ -91,6 +91,10 @@ class CustomBackend(ModelBackend):
 # 注册功能的view
 class RegisterView(View):
     def get(self, request):
+        from utils.email import send
+        ret = send()
+        output = _("Welcome to my site.")
+        return JsonResponse({"ret": ret, 'ip': "{}".format(request.META['REMOTE_ADDR']), 'out': output})
         register_form = RegisterForm(request.POST)
         return render(request, 'register.html', {'register_form': register_form})
 
