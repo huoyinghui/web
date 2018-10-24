@@ -48,14 +48,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'xadmin',
+    'crispy_forms',
     'message',
     'users',
     'courses',
     'organization',
     'operation',
-    'xadmin',
-    'crispy_forms',
     'captcha',
+    'blog',
     'gunicorn',
 ]
 AUTH_USER_MODEL = "users.UserProfile"
