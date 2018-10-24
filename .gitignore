@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 banner/
+web/*_setting.py
 __pycache__/
 *.py[cod]
 *$py.class
