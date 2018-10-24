@@ -24,7 +24,7 @@ from users.views import LoginView, LogoutView, RegisterView
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
-    path('', TemplateView.as_view(template_name= "index.html"), name="index"),
+    path('', TemplateView.as_view(template_name="index.html"), name="index"),
     # 基于类方法实现登录,这里是调用它的方法
     path('login/', LoginView.as_view(), name="login"),
     # path('form/', getForm),

@@ -132,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
 LANGUAGE_CODE = 'zh-hans'
 
 # TIME_ZONE = 'UTC'
@@ -161,16 +161,23 @@ TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
 #     os.path.join(BASE_DIR, "static"),
 # )
 #
-# EMAIL_HOST = "smtp.sina.com"
-# EMAIL_PORT = 25
-# EMAIL_HOST_USER = "projectsedu@sina.com"
-# EMAIL_HOST_PASSWORD = "admin123"
-# EMAIL_USE_TLS= False
-# EMAIL_FROM = "projectsedu@sina.com"
 #
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# SETTING MODE / DEV
+PROJ_SETTING_MODE = os.getenv('MODE', 'LOCAL')
 
-
+try:
+    if PROJ_SETTING_MODE.upper() == 'PROD':
+        from .prod_setting import *
+    else:
+        from .local_setting import *
+except ImportError:
+    pass
+#
+# try:
+#     from .func_settings import redis_connect
+#     REDIS_CACHE = redis_connect(REDIS.get('default', {}))
+# except ImportError:
+#     REDIS_CACHE = None
