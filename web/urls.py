@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
 from django.views.generic import TemplateView
-from users.views import LoginView, LogoutView, RegisterView
+from users.views import LoginView, LogoutView, RegisterView, CaptchaFieldView
 
 
 urlpatterns = [
@@ -37,6 +37,7 @@ urlpatterns = [
 
     # 验证码url
     path("captcha/", include('captcha.urls')),
+    path("captcha_view/", CaptchaFieldView.as_view(), name='captcha_view'),
     path("blog/", include('blog.urls')),
     path("lang/", include('lang.urls')),
 

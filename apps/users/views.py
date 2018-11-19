@@ -1,4 +1,6 @@
+import json
 import logging
+from django.utils import timezone
 
 from django.core.cache import cache
 from django.shortcuts import render
@@ -18,7 +20,7 @@ from .forms import LoginForm, RegisterForm
 from .models import UserProfile
 from message.models import UserMessage
 # Create your views here.
-
+from captcha.models import CaptchaStore
 logger = logging.getLogger('app')
 
 
@@ -88,13 +90,47 @@ class CustomBackend(ModelBackend):
             return None
 
 
+class CaptchaFieldView(View):
+    """
+    验证码类
+    """
+    def parse_json(self, request):
+        return json.loads(request.body)
+
+    def get(self, request):
+        hash_key = CaptchaStore.pick()
+        img_url = "/captcha/image/{}".format(hash_key)
+        return JsonResponse({'hashkey': hash_key, "url": img_url})
+
+    def post(self, request):
+        try:
+            params_dict = self.parse_json(request)
+        except Exception as e:
+            return HttpResponse(status=400)
+
+        hash_key = params_dict.get('hashkey', '')
+        captcha = params_dict.get('captcha', '')
+        try:
+            CaptchaStore.objects.get(response=captcha, hashkey=hash_key, expiration__gt=timezone.now()).delete()
+        except CaptchaStore.DoesNotExist:
+            return HttpResponse(status=400)
+        return JsonResponse({'hashkey': hash_key, 'url': '/'})
+
+
 # 注册功能的view
 class RegisterView(View):
     def get(self, request):
         from utils.email import send
         ret = send()
+        from raven import Client
+        dsn = 'http://44cd8960dc814ec7a885f47b7254faa8:629ae95ef24e41eb81a4f45fcd8a15f5@localhost:9000/2'
+        client = Client(dsn, include_paths=['raven'])
+        client.user_context({
+            'email': 'hello',
+            'ret': ret,
+        })
         output = _("Welcome to my site.")
-        return JsonResponse({"ret": ret, 'ip': "{}".format(request.META['REMOTE_ADDR']), 'out': output})
+        # return JsonResponse({"ret": ret, 'ip': "{}".format(request.META['REMOTE_ADDR']), 'out': output})
         register_form = RegisterForm(request.POST)
         return render(request, 'register.html', {'register_form': register_form})
 

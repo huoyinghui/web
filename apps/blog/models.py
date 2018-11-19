@@ -17,7 +17,7 @@ class Tag(models.Model):
 
 # 博客模型
 class Blog(models.Model):
-    caption = models.CharField(max_length=50, verbose_name=u'标题')
+    caption = models.CharField(max_length=50, verbose_name=u'标题', blank=True, null=True)
     content = models.TextField(max_length=1000, verbose_name=u'内容', default='')
     tags = models.ManyToManyField(Tag, blank=True, verbose_name=u'标签')
 

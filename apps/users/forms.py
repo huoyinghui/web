@@ -40,3 +40,4 @@ class ModifyPwdForm(forms.Form):
     """
     old_password = forms.CharField(required=True, min_length=6)
     new_password = forms.CharField(required=True, min_length=6)
+    captcha = CaptchaField(error_messages={"invalid": u"验证码错误"})

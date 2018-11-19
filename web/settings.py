@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'captcha',
     'blog',
     'gunicorn',
+    'raven.contrib.django.raven_compat',
 ]
 AUTH_USER_MODEL = "users.UserProfile"
 
@@ -67,7 +68,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -151,6 +152,7 @@ LOCALE_PATHS = (
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/assets/'
+STATIC_ROOT = 'com_statics'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, './templates/assets')
 ]
