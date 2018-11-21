@@ -36,7 +36,7 @@ class LogoutView(View):
         return HttpResponseRedirect(reverse("index"))
 
 
-@method_decorator(cache_page(30 * 1), name='dispatch')
+# @method_decorator(cache_page(30 * 1), name='dispatch')
 class LoginView(View):
     """
 

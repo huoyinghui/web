@@ -24,19 +24,19 @@ from users.views import LoginView, LogoutView, RegisterView, CaptchaFieldView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('xadmin/', xadmin.site.urls),
+    path('api/xadmin/', xadmin.site.urls),
     path('', TemplateView.as_view(template_name="index.html"), name="index"),
     # 基于类方法实现登录,这里是调用它的方法
-    path('login/', LoginView.as_view(), name="login"),
+    path('api/login/', LoginView.as_view(), name="login"),
     # path('form/', getForm),
     # 退出功能url
-    path('logout/', LogoutView.as_view(), name="logout"),
+    path('api/logout/', LogoutView.as_view(), name="logout"),
 
     # 注册url
-    path("register/", RegisterView.as_view(), name="register"),
+    path("api/register/", RegisterView.as_view(), name="register"),
 
     # 验证码url
-    path("captcha/", include('captcha.urls')),
+    path("api/captcha/", include('captcha.urls')),
     path("captcha_view/", CaptchaFieldView.as_view(), name='captcha_view'),
     path("blog/", include('blog.urls')),
     path("lang/", include('lang.urls')),
